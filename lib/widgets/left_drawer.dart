@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thrifting_haven_mobile/screens/menu.dart';
 import 'package:thrifting_haven_mobile/screens/thriftentry_form.dart';
+import 'package:thrifting_haven_mobile/screens/list_thriftentry.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -27,7 +28,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(8)),
                 Text(
-                  "Track your mental health every day here!",
+                  "Get your thrifting finds over here!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -50,7 +51,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.mood),
+            leading: const Icon(Icons.inventory),
             title: const Text('Add Product'),
             // Redirection part to ThriftEntryFormPage
             onTap: () {
@@ -59,6 +60,17 @@ class LeftDrawer extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const ThriftEntryFormPage()),
               );
             },
+          ),
+          ListTile(
+              leading: const Icon(Icons.add_box),
+              title: const Text('Product List'),
+              onTap: () {
+                  // Route to the thrift page
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductPage()),
+                  );
+              },
           ),
         ],
       ),

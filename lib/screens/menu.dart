@@ -5,6 +5,7 @@ import 'package:thrifting_haven_mobile/widgets/thrift_card.dart';
 class MyHomePage extends StatelessWidget {
   final String name = 'Kusuma Ratih Hanindyani'; // Name
   final String className = 'PBP KI'; // Class
+  final String npm = '2306256406'; // NPM
   final List<ItemHomepage> items = [
     ItemHomepage("View Product List", Icons.list),
     ItemHomepage("Add Product", Icons.add),
@@ -46,6 +47,7 @@ class MyHomePage extends StatelessWidget {
               children: [
                 InfoCard(title: 'Name', content: name),
                 InfoCard(title: 'Class', content: className),
+                InfoCard(title: 'NPM', content: npm),
               ],
             ),
 

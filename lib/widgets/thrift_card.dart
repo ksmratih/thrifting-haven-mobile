@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:thrifting_haven_mobile/screens/thriftentry_form.dart';
+import 'package:thrifting_haven_mobile/screens/list_thriftentry.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:thrifting_haven_mobile/screens/login.dart';
 
 class ItemHomepage {
   final String name;
@@ -18,6 +22,7 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Material(
       color: color,
       // Specify the background color of the application theme.
@@ -27,7 +32,7 @@ class ItemCard extends StatelessWidget {
 
       child: InkWell(
         // Touch-responsive area
-        onTap: () {
+        onTap: () async{
           // Show SnackBar when clicked
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -38,11 +43,43 @@ class ItemCard extends StatelessWidget {
           if (item.name == "Add Product") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ThriftEntryFormPage()),
+              MaterialPageRoute(
+                builder: (context) => const ThriftEntryFormPage(),
+              ),
             );
           }
+          else if (item.name == "View Product List") {
+            Navigator.push(context,
+              MaterialPageRoute(
+                builder: (context) => const ProductPage()
+              ),
+            );
+          }
+          else if (item.name == "Logout") {
+              final response = await request.logout(
+                  // TODO: Change the URL to your Django app's URL. Don't forget to add the trailing slash (/) if needed.
+                  "http://localhost:8000/auth/logout/");
+              String message = response["message"];
+              if (context.mounted) {
+                  if (response['status']) {
+                      String uname = response["username"];
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("$message Goodbye, $uname."),
+                      ));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
+                  } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(message),
+                          ),
+                      );
+                  }
+              }
+          }  
         },
-
         // Container to store the Icon and Text
         child: Container(
           padding: const EdgeInsets.all(8),
