@@ -446,3 +446,32 @@ class MyApp extends StatelessWidget {
 Navigation in a multi-page Flutter app is managed with the Navigator class, which provides functions to push and pop routes. Using `Navigator.push` to move to a new page, `Navigator.pop` to return to the previous page, and using `Navigator.pushNamed` to navigate between screens, which helps keep the code organized, especially in larger applications. 
 
 </details>
+
+<details>
+<Summary><b>Assignment 9</b></summary>
+
+## [ASSIGNMENT 9](https://pbp-fasilkom-ui.github.io/ganjil-2025/en/assignments/individual/assignment-9)
+
+## :memo: How to implement the checklist
+
+### :ballot_box_with_check: Implement the registration feature in the Flutter project.
+
+
+### :ballot_box_with_check: Create a login page in the Flutter project.
+
+
+### :ballot_box_with_check: Integrate the Django authentication system with the Flutter project.
+
+
+### :ballot_box_with_check: Create a custom model according to your Django application project.
+
+
+### :ballot_box_with_check: Create a page containing a list of all items available at the JSON endpoint in Django that you have deployed.
+
+
+### :ballot_box_with_check:  Create a detail page for each item listed on the Product list page.
+
+
+### :ballot_box_with_check: Filter the item list page to display only items associated with the currently logged-in user.
+
+</details>

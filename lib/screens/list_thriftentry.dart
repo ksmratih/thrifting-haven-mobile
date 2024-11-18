@@ -3,6 +3,7 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:thrifting_haven_mobile/models/thrift_entry.dart';
 import 'package:thrifting_haven_mobile/widgets/left_drawer.dart';
+import 'package:thrifting_haven_mobile/widgets/product_details.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -34,7 +35,9 @@ class _ProductPageState extends State<ProductPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Entry List'),
+        title: const Text('Product List'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
       ),
       drawer: const LeftDrawer(),
       body: FutureBuilder(
@@ -47,7 +50,7 @@ class _ProductPageState extends State<ProductPage> {
               return const Column(
                 children: [
                   Text(
-                    'There is no mood data in mental health tracker.',
+                    'There is no product data in Thrifting Haven',
                     style: TextStyle(fontSize: 20, color: Color(0xff59A5D8)),
                   ),
                   SizedBox(height: 8),
@@ -56,30 +59,51 @@ class _ProductPageState extends State<ProductPage> {
             } else {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
-                itemBuilder: (_, index) => Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${snapshot.data![index].fields.name}",
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
+                itemBuilder: (context, index) {
+                  final product = snapshot.data![index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailsPage(product: product),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey, // Color of the border
+                            width: 1, // Width of the border
+                          ),
+                          borderRadius: BorderRadius.circular(12), // Border radius of the container
+                        ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${snapshot.data![index].fields.name}",
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("${snapshot.data![index].fields.description}"),
+                            const SizedBox(height: 10),
+                            Text("${snapshot.data![index].fields.price}"),
+                            const SizedBox(height: 10),
+                            Text("${snapshot.data![index].fields.condition}")
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text("${snapshot.data![index].fields.description}"),
-                      const SizedBox(height: 10),
-                      Text("${snapshot.data![index].fields.price}"),
-                      const SizedBox(height: 10),
-                      Text("${snapshot.data![index].fields.condition}")
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               );
             }
           }
